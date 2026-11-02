@@ -1,10 +1,16 @@
 package view;
 
+import data_access.InMemoryUserDataAccessObject;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.ChangePasswordController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logged_in.LoggedInViewModelListener;
+import interface_adapter.login.LoginPresenter;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.logout.LogoutPresenter;
+import use_case.logout.LogoutInteractor;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -33,7 +39,6 @@ public class LoggedInView extends JPanel implements ActionListener, LoggedInView
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addListener(this);
-
         final JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -106,7 +111,7 @@ public class LoggedInView extends JPanel implements ActionListener, LoggedInView
      * @param evt the ActionEvent to react to
      */
     public void actionPerformed(ActionEvent evt) {
-        // TODO: execute the logout use case through the Controller
+        logoutController.execute();
         System.out.println("Click " + evt.getActionCommand());
     }
 
@@ -115,7 +120,7 @@ public class LoggedInView extends JPanel implements ActionListener, LoggedInView
     }
 
     public void setLogoutController(LogoutController logoutController) {
-        // TODO: save the logout controller in the instance variable.
+        this.logoutController = logoutController;
     }
 
     /**
